@@ -1,0 +1,14 @@
+{
+    "name": "jimmdigriz/jsom",
+    "description": "Comfortable json mapping into objects.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "JimmDiGriz",
+            "email": "icsdisk@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
