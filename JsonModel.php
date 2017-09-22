@@ -39,6 +39,12 @@ abstract class JsonModel
                 continue;
             }
 
+            if (is_subclass_of($type, self::class)) {
+                $this->{$field} = $this->toModel($tempValue, $type);
+
+                continue;
+            }
+
             $this->{$field} = $tempValue;
         }
     }
@@ -53,6 +59,12 @@ abstract class JsonModel
         $result = [];
 
         foreach ($fields as $field => $type) {
+            if ($this->{$field} instanceof static) {
+                $result[$field] = $this->{$field}->toArray();
+
+                continue;
+            }
+
             $result[$field] = $this->{$field};
         }
 
@@ -127,5 +139,25 @@ abstract class JsonModel
         }
 
         return $value;
+    }
+
+    /**
+     * @param mixed  $value
+     * @param string $class
+     *
+     * @return JsonModel
+     */
+    protected function toModel($value, $class)
+    {
+        try {
+            /**@var static $instance */
+            $instance = new $class;
+
+            $instance->fromJson($value);
+
+            return $instance;
+        } catch (\Exception $ex) {
+            return $value;
+        }
     }
 }
