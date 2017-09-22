@@ -54,7 +54,10 @@ class JsonArray
         return $this->result;
     }
 
-    public function toJson()
+    /**
+     * @return string
+     */
+    public function toJson(): string
     {
         $array = [];
 

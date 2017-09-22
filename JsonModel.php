@@ -8,10 +8,10 @@
 
 namespace jimmdigriz\jsom;
 
+use jimmdigriz\jsom\values\Types;
+
 abstract class JsonModel
 {
-    const TYPES = ['int', 'float', 'json', 'string', 'bool'];
-
     /**
      * @return array
      */
@@ -31,7 +31,7 @@ abstract class JsonModel
                 $tempValue = $row->{$field};
             }
 
-            if (in_array($type, self::TYPES, true)) {
+            if (in_array($type, Types::$list, true)) {
                 $method = 'to' . ucfirst($type);
 
                 $this->{$field} = $this->{$method}($tempValue);
@@ -64,9 +64,10 @@ abstract class JsonModel
      *
      * @return int|mixed
      */
-    protected function toInt($value) {
+    protected function toInt($value)
+    {
         if (is_int($value)) {
-            return (int) $value;
+            return (int)$value;
         }
 
         return $value;
@@ -77,9 +78,10 @@ abstract class JsonModel
      *
      * @return float|mixed
      */
-    protected function toFloat($value) {
+    protected function toFloat($value)
+    {
         if (is_float($value)) {
-            return (float) $value;
+            return (float)$value;
         }
 
         return $value;
@@ -90,7 +92,8 @@ abstract class JsonModel
      *
      * @return string|mixed
      */
-    protected function toJson($value) {
+    protected function toJson($value)
+    {
         try {
             return json_encode($value);
         } catch (\Exception $ex) {
@@ -103,9 +106,10 @@ abstract class JsonModel
      *
      * @return string|mixed
      */
-    protected function toString($value) {
+    protected function toString($value)
+    {
         if (is_string($value)) {
-            return (string) $value;
+            return (string)$value;
         }
 
         return $value;
@@ -116,9 +120,10 @@ abstract class JsonModel
      *
      * @return bool|mixed
      */
-    protected function toBool($value) {
+    protected function toBool($value)
+    {
         if (is_bool($value)) {
-            return (bool) $value;
+            return (bool)$value;
         }
 
         return $value;
